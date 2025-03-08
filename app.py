@@ -33,7 +33,7 @@ def get_pages(pages: str):
     start, end = validate_range("page", pages)
     pairs = []
     for page in range(start, end + 1):
-        first_ayah_in_page = Storage.retrive_range("page", page, page)[0]
+        first_ayah_in_page = Storage.get_ayahs_by_page_range(page, page)[0]
         last_ayah_in_page = Storage.get_ayah_by_id(first_ayah_in_page.id - 1)
         if last_ayah_in_page:
             pairs.append({"question": last_ayah_in_page, "answer": first_ayah_in_page})

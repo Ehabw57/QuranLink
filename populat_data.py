@@ -1,45 +1,36 @@
-from data.quran_api import Quran_API
 from modules.surahs import Surahs
 from modules.ayahs import Ayahs
 from modules import Storage
+import json
+import gzip
 
 
-def clean_ayah(ayah):
-    """Clean any seprataed quran marks"""
-    words = ayah.split()
-    cleaned = [""]
-    for x in range(len(words)):
-        if x > 0 and len(words[x]) < 2:
-            cleaned[-1] += words[x]
-        else:
-            cleaned.append(words[x])
-    return cleaned[1:]
+def populate_data(min=0, max=114):
+    with gzip.open('data/hafsChapters_v3-0.json.gz', 'rt') as C:
+        surahs = json.load(C)
 
-
-def populate_data(min=0, max=113):
-    """ Populates the database with Surahs and Ayahs.
-    Fetches data from the API, processes it, and inserts it into the database
-    """
-    surahs = Quran_API.fetch_surahs()
     for s in surahs[min:max]:
         Storage.new(Surahs(
-                name=s['name_arabic'].encode('utf-8'),
-                en_name=s['name_simple'],
-                ayahs_count=s['verses_count']))
+                name=s['name'].encode('utf-8'),
+                en_name=s['en_name'],
+                ayahs_count=s['ayahs_count']))
     Storage.save()
 
-    for surah in surahs[min:max]:
-        ayahs = Quran_API.fetch_ayahs(surah['id'])
-        for a in ayahs:
-            Storage.new(Ayahs(
-                    surah_id=surah['id'],
-                    number=a['verse_number'],
-                    text=clean_ayah(a['text_imlaei']),
-                    simple_text=a['text_imlaei_simple'].split(),
-                    page=a['page_number'],
-                    juz=a['juz_number'],
-                    rub=a['rub_el_hizb_number']))
-        Storage.save()
+    with gzip.open('data/hafsVerses_v3.0.json.gz', 'rt') as V:
+        ayahs = json.load(V)
+
+    for a in ayahs:
+        Storage.new(Ayahs(
+                surah_id=a['surah_id'],
+                number=a['number'],
+                glyph_number=a['glyph_no'].encode('utf-8'),
+                text=a['text'],
+                simple_text=a['simple_text'],
+                page=a['page'],
+                juz=a['juz']))
+        print(f"Populated: Verse ({a['number']}) of Chapter ({surahs[a['surah_id'] - 1 ]['en_name']})")
+    Storage.save()
+
     Storage.close
 
 
