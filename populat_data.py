@@ -5,7 +5,7 @@ from modules import Storage
 
 
 def clean_ayah(ayah):
-    """Clean any seprataed tajweed marks"""
+    """Clean any seprataed quran marks"""
     words = ayah.split()
     cleaned = [""]
     for x in range(len(words)):
@@ -16,19 +16,19 @@ def clean_ayah(ayah):
     return cleaned[1:]
 
 
-def populate_data():
+def populate_data(min=0, max=113):
     """ Populates the database with Surahs and Ayahs.
     Fetches data from the API, processes it, and inserts it into the database
     """
     surahs = Quran_API.fetch_surahs()
-    for s in surahs:
+    for s in surahs[min:max]:
         Storage.new(Surahs(
                 name=s['name_arabic'].encode('utf-8'),
                 en_name=s['name_simple'],
                 ayahs_count=s['verses_count']))
     Storage.save()
 
-    for surah in surahs:
+    for surah in surahs[min:max]:
         ayahs = Quran_API.fetch_ayahs(surah['id'])
         for a in ayahs:
             Storage.new(Ayahs(
@@ -37,7 +37,8 @@ def populate_data():
                     text=clean_ayah(a['text_imlaei']),
                     simple_text=a['text_imlaei_simple'].split(),
                     page=a['page_number'],
-                    juz=a['juz_number']))
+                    juz=a['juz_number'],
+                    rub=a['rub_el_hizb_number']))
         Storage.save()
     Storage.close
 

@@ -17,6 +17,7 @@ class VerseRespond(BaseModel):
     simple_text: List[str]
     page: int
     juz: int
+    rub: int
 
 
 class PageRespond(BaseModel):

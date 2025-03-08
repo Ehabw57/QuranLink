@@ -15,8 +15,8 @@ class Surahs(Base):
     """
     __tablename__ = 'surahs'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(BLOB, unique=True, nullable=False)
-    en_name = Column(String(16), unique=True, nullable=False)
+    name = Column(BLOB, nullable=False)
+    en_name = Column(String(16), nullable=False)
     ayahs_count = Column(Integer, nullable=False)
 
     ayahs = relationship('Ayahs', back_populates='surah',

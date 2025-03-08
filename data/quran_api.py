@@ -11,10 +11,10 @@ class Quran_API:
         try:
             response = requests.get(f"{cls.BASE_URL}/chapters")
             response.raise_for_status()
-            print("Fetched surahs successfully")
+            print("✅ Fetched surahs successfully")
             return response.json().get('chapters', [])
         except requests.RequestException as e:
-            print(f"Error fetching surahs: {e}")
+            print(f"❌ Error fetching surahs: {e}")
             return []
 
     @classmethod
@@ -25,18 +25,17 @@ class Quran_API:
                 response = requests.get(
                     f"{cls.BASE_URL}/verses/by_chapter/{surah_id}",
                     params={
-                        'fields': 'text_imlaei,text_imlaei_simple',
+                        'fields': 'text_uthmani,text_imlaei,text_imlaei_simple',
                         'per_page': 300
-                    }
-                )
+                        }
+                    )
                 response.raise_for_status()
-                print(f"Fetched ayahs of surah[{surah_id}] successfully")
+                print(f"✅ Fetched verses of surah[{surah_id}] successfully")
                 return response.json().get('verses', [])
             except requests.RequestException as e:
-                print(f"FETCH FAILED: {e}. Retrying in 20 seconds...")
+                print(f"FETCHING FAILED: {e}. Retrying in 5 seconds...")
                 retries += 1
                 time.sleep(5)
 
-        print(f"Failed to fetch ayahs of surah[{surah_id}]. Limit reached.")
+        print(f"❌Failed to fetch ayahs of surah[{surah_id}]. Limit reached.")
         return []
-

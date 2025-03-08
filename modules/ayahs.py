@@ -1,5 +1,5 @@
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, BLOB, ForeignKey, Index, JSON
+from sqlalchemy import Column, Integer, ForeignKey, Index, JSON, Boolean
 from .surahs import Base
 
 
@@ -23,6 +23,8 @@ class Ayahs(Base):
     simple_text = Column(JSON, nullable=False)
     page = Column(Integer, nullable=False, index=True)
     juz = Column(Integer, nullable=False, index=True)
+    rub = Column(Integer, nullable=False, index=True)
+    sajdah = Column(Boolean, default=False)
 
     surah = relationship('Surahs', back_populates='ayahs')
 

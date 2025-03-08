@@ -3,6 +3,11 @@ from modules import Storage
 from utils.validate_range import validate_range
 from data.schema import VerseRespond, SurahRespond, PageRespond
 from typing import List
+from populat_data import populate_data
+
+if not Storage.get_surah(1):
+    populate_data()
+
 
 app = FastAPI()
 
@@ -15,7 +20,12 @@ def get_surahs():
 @app.get("/verses", response_model=List[VerseRespond])
 def get_verses(range_type: str, range_value: str):
     start, end = validate_range(range_type, range_value)
-    return Storage.retrive_range(range_type, start, end)
+    if range_type == 'page':
+        return Storage.get_ayahs_by_page_range(start, end)
+    if range_type == 'juz':
+        return Storage.get_ayahs_by_juz_range(start, end)
+    if range_type == 'key':
+        return Storage.get_ayahs_by_id_range(start, end)
 
 
 @app.get("/pages", response_model=List[PageRespond])
