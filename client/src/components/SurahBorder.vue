@@ -27,24 +27,24 @@ export default {
   .image-container {
     position: relative;
     display: inline-block;
-    width: 100%;  
     max-width: 21em; 
   }
 
   .image-container img {
-    width: 100%; 
+    width: 35vw; 
     height: auto;
   }
 
   .text-overlay {
     position: absolute;
     font-family: 'SurahName', sans-serif;
+    margin: 0;
+    padding: 0;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: black;
-    font-size: 1.8em;
+    font-size: 3vw;
     text-align: center;
   }
 </style>
-

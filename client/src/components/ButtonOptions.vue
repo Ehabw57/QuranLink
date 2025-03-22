@@ -33,7 +33,7 @@ button {
   border: none;
   color: #007bff;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 10px;
   padding: 4px 8px;
 }
 
