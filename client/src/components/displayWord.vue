@@ -14,5 +14,6 @@ p.quran-text {
   font-family: "Uthmani";
   display: inline-block;
   margin: 0 2px;
+  font-size: 13px;
 }
 </style>

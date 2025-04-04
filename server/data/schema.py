@@ -13,6 +13,7 @@ class VerseRespond(BaseModel):
     id: int
     surah_id: int
     number: int
+    glyph_number: str
     text: List[str]
     simple_text: List[str]
     page: int

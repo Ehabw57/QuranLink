@@ -1,34 +1,153 @@
 <template>
-  <h4>range={{ range }}, mode={{ mode }}</h4>
-  <h5>start={{ value.start }}, end={{ value.end }}</h5>
-  <ButtonOptions :options="modes" v-model="mode" />
-  <label>||</label>
-  <ButtonOptions :options="ranges" v-model="range" />
-  <VerseSelector v-if="range=='verse'" :chapters="chapters" v-model="verseValue" />
-  <RangeSelector :limit='40' v-else v-model="value"/>
-  <SurahBorder :surahName="surahName" />
-  <testVerse :verse="verses" />
+  <div>
+    <ButtonOptions :options="modes" v-model="mode" />
+    <label>||</label>
+    <ButtonOptions :options="ranges" v-model="range" />
+    <label>||</label>
+    <VerseSelector v-if="range=='key'" :chapters="chapters" v-model="verseRangeValue" />
+    <RangeSelector :limit='40' v-else v-model="rangeValue"/>
+    <input @change="handelRandom" type="checkbox" v-model="isRandom" id="random">
+    <label for="random">random</label>
+  </div>
+
+  <div>
+    <SurahBorder :surahName="surahName.name" />
+  </div>
+
+  <div v-if="!loading && verses[verseIndex]">
+    <div v-if="mode === 'verses'">
+    <testVerse  ref="verseTest" v-model="surahId" @done="handelDone" :oriVerses="versesChunks[currentChunk]" />
+    </div>
+    <testWord v-else ref="wordsTest" v-model="surahId" @done="handelDone"  :verse="verses[verseIndex]" />
+  </div>
+
+  <div v-else>
+    <h2>still loading...</h2>
+  </div>
+
+
+  <div>
+    <button @click="skip">skip</button>
+    <button @click="hint">hint</button>
+    <button @click="restart">restart</button>
+  </div>
 
 </template>
 
 <script>
+import {store} from './store.js';
   export default {
     name: 'App',
     data () {
       return {
-        surahName: 'الفاتحه',
-        word: 'koors',
-        chapters: [{"id":1,"name":"الفاتحة","en_name":"Al-Fatihah","ayahs_count":7},{"id":2,"name":"البقرة","en_name":"Al-Baqarah","ayahs_count":286},{"id":3,"name":"آل عمران","en_name":"Ali 'Imran","ayahs_count":200},{"id":4,"name":"النساء","en_name":"An-Nisa","ayahs_count":176},{"id":5,"name":"المائدة","en_name":"Al-Ma'idah","ayahs_count":120},{"id":6,"name":"الأنعام","en_name":"Al-An'am","ayahs_count":165},{"id":7,"name":"الأعراف","en_name":"Al-A'raf","ayahs_count":206},{"id":8,"name":"الأنفال","en_name":"Al-Anfal","ayahs_count":75},{"id":9,"name":"التوبة","en_name":"At-Tawbah","ayahs_count":129},{"id":10,"name":"يونس","en_name":"Yunus","ayahs_count":109},{"id":11,"name":"هود","en_name":"Hud","ayahs_count":123},{"id":12,"name":"يوسف","en_name":"Yusuf","ayahs_count":111},{"id":13,"name":"الرعد","en_name":"Ar-Ra'd","ayahs_count":43},{"id":14,"name":"ابراهيم","en_name":"Ibrahim","ayahs_count":52},{"id":15,"name":"الحجر","en_name":"Al-Hijr","ayahs_count":99},{"id":16,"name":"النحل","en_name":"An-Nahl","ayahs_count":128},{"id":17,"name":"الإسراء","en_name":"Al-Isra","ayahs_count":111},{"id":18,"name":"الكهف","en_name":"Al-Kahf","ayahs_count":110},{"id":19,"name":"مريم","en_name":"Maryam","ayahs_count":98},{"id":20,"name":"طه","en_name":"Taha","ayahs_count":135},{"id":21,"name":"الأنبياء","en_name":"Al-Anbya","ayahs_count":112},{"id":22,"name":"الحج","en_name":"Al-Hajj","ayahs_count":78}],
-        modes: ['words', 'pages', 'verses'],
-        ranges: ['juz', 'rub', 'page', 'verse'],
-        range: 'juz',
+        store,
+        chapters: [],
+        verses: [],
+        versesChunks:[],
+        currentChunk: 0,
+        verseIndex: 0,
+        surahId: 1,
+        isRandom: false,
+        modes: ['words', 'verses'],
         mode: 'words',
-        value: {start: 1, end:1},
-        verseValue: {sc: 1, sv: 1, ec: 1, ev: 1},
-        verses: {"glyph": "ﰆ", "id":7,"surah_id":1,"number":7,"text":["صِرَٰطَ","ٱلَّذِينَ","أَنۡعَمۡتَ","عَلَيۡهِمۡ","غَيۡرِ","ٱلۡمَغۡضُوبِ","عَلَيۡهِمۡ","وَلَا","ٱلضَّآلِّينَ"],"simple_text":["صراط","الذين","أنعمت","عليهم","غير","المغضوب","عليهم","ولا","الضالين"],"page":1,"juz":1,"rub":0}
+        ranges: ['juz', 'page', 'key'],
+        range: 'key',
+        rangeValue: {start: 1, end:1},
+        verseRangeValue: {sc: 1, sv: 1, ec: 1, ev: 7},
+        loading: true
+      }
+    },
+    computed: {
+      surahName() {
+        if (this.chapters.length > 0) {
+        return this.chapters.find(s => s.id === this.surahId)
+      }
+      return { name: "الفاتحه" };
+    }
+    },
+    methods: {
+      async fetchChapters() {
+        this.loading = true;
+        const response = await fetch("http://localhost:8000/surahs");
+        this.chapters = await response.json();
+        this.loading = false;
+      },
+
+      async fetchVerses() {
+        const { sc, sv, ec, ev } = this.verseRangeValue;
+        const { start, end } = this.rangeValue;
+
+        const params = new URLSearchParams({
+          range_type: this.range,
+          range_value: this.range === "key" ? `${sc}:${sv}-${ec}:${ev}` : `${start}:${end}`,
+        }).toString();
+
+        this.loading = true;
+        const response = await fetch(`http://localhost:8000/verses?${params}`);
+        this.verses = await response.json();
+        this.loading = false;
+      },
+
+      chunkVerses(size) {
+        const chunks = [];
+        for (let i = 0; i < this.verses.length; i += size) {
+          chunks.push(this.verses.slice(i, i + size));
+        }
+        this.versesChunks = chunks;
+        return chunks;
+      },
+      handelRandom() {
+        this.currentChunk = 0;
+        if(this.isRandom) {
+          this.versesChunks = this.store.shuffleArray(this.versesChunks)
+        } else {
+          this.chunkVerses(5);
         }
       },
+
+      handelDone() {
+        if (this.mode == 'words') {
+          this.verseIndex++;
+          this.$refs.wordsTest.restartTest()
+        } else {
+          this.currentChunk++;
+        }
+      },
+      randomVerseIndex(max) {
+        return Math.floor(Math.random() * max)
+      },
+      restart(){
+        this.mode === 'words' ? this.$refs.wordsTest.restartTest() : this.$refs.verseTest.restartTest()
+      },
+      skip() {
+        this.store.currentInput.emitCorrect()
+      },
+      hint() {
+        this.store.currentInput.addHint()
+      },
+    },
+    watch: {
+      rangeValue: {
+        async handler() {
+          await this.fetchVerses();
+          this.chunkVerses(5);
+        },
+        deep: true,
+      },
+      verseRangeValue: {
+        async handler() {
+          await this.fetchVerses();
+          this.chunkVerses(5);
+        },
+        deep: true
+      }
+    },
+    async created() {
+      await this.fetchChapters()
+      await this.fetchVerses()
+      this.chunkVerses(5)
     }
+  }
 </script>
 <style scoped>
 div.conot {

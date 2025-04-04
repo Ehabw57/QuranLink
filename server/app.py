@@ -4,12 +4,18 @@ from utils.validate_range import validate_range
 from data.schema import VerseRespond, SurahRespond, PageRespond
 from typing import List
 from populat_data import populate_data
+from fastapi.middleware.cors import CORSMiddleware
 
 if not Storage.get_surah(1):
     populate_data()
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8080"],
+    allow_credentials=True,
+)
 
 
 @app.get("/surahs", response_model=List[SurahRespond])

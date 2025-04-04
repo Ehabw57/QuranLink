@@ -34,8 +34,7 @@
         handleInput () {
           this.inputValue = this.inputValue.trim();
           if (this.inputValue.length == this.expected.length) {
-            const errorRate = this.leDistance(this.inputValue, this.expected) / this.expected.length * 100;
-            if (errorRate < 15) {
+            if (this.simplifyText(this.inputValue) === this.simplifyText(this.expected)) {
               this.emitCorrect();
             } else {
               this.isShaking = true;
@@ -56,30 +55,15 @@
           if (this.hint.length < this.expected.length - 1) {
             this.hint += this.expected[this.hint.length];
             this.inputValue = this.hint;
+          } else {
+            this.emitCorrect();
           }
         },
-        leDistance(a, b) {
-          const matrix = [];
-
-          for (let i = 0; i <= a.length; i++) {
-            matrix[i] = [i];
-          }
-          for (let j = 0; j <= b.length; j++) {
-            matrix[0][j] = j;
-          }
-
-          for (let i = 1; i <= a.length; i++) {
-            for (let j = 1; j <= b.length; j++) {
-              const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-              matrix[i][j] = Math.min(
-                matrix[i - 1][j] + 1,
-                matrix[i][j - 1] + 1,
-                matrix[i - 1][j - 1] + cost
-              );
-            }
-          }
-
-          return matrix[a.length][b.length];
+        simplifyText(text) {
+          return text
+            .replace(/[إأآ]/g, "ا")
+            .replace(/ة/g, "ه")
+            .replace(/ى/g, "ي");
         },
         emitCorrect() {
           this.$emit('correct');
@@ -100,12 +84,15 @@ input {
   outline: none;
   text-align: center;
   transition: all 0.3s ease;
+  padding: 0;
+  height: 20px;
+  font-size: 12px;
+  font-family: "Uthmani";
 }
 
 input:focus {
   border-color: #42b983;
   box-shadow: 0 0 0 2px rgba(66, 185, 131, 0.2);
-  padding: 0;
 }
 
 .shake {

@@ -1,2 +1,2 @@
 sqlalchemy
-fastapi['standard']
+fastapi[standard]
