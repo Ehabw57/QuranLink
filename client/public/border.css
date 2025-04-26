@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'SurahName';
+  src: url('../assets/fonts/SurahNames.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.border-container {
+  margin-top: 40px;
+  width: 100%;
+  position: relative; 
+}
+
+.border-container .border-image {
+  margin: 0 auto;
+  background-image: url("/assets/Surah-border-light.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 140px;
+  max-width: 90% 
+}
+.surahName {
+  font-family: 'SurahName', sans-serif;
+  font-size: clamp(1.5em, 3vw, 2.5em);
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}

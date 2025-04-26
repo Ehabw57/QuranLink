@@ -78,32 +78,5 @@
 
   <style scoped>
 
-input {
-  background-color: transparent;
-  border: 1px solid #ccc;
-  outline: none;
-  text-align: center;
-  transition: all 0.3s ease;
-  padding: 0;
-  height: 20px;
-  font-size: 12px;
-  font-family: "Uthmani";
-}
 
-input:focus {
-  border-color: #42b983;
-  box-shadow: 0 0 0 2px rgba(66, 185, 131, 0.2);
-}
-
-.shake {
-  position: relative;
-  animation: shake 0.4s ease-in-out;
-}
-
-@keyframes shake {
-  0%, 100% { color: black; background-color: transparent; left: 0; }
-  25% { left: -4px; }
-  50% { color: white; background-color: #e20; left: 4px; }
-  75% { left: -4px; }
-}
 </style>

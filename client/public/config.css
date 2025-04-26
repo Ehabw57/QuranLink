@@ -1,0 +1,22 @@
+.config {
+  max-width: 50%; height: 50px;
+  margin: 0 auto;
+  background-color: #2C2E31;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+
+div.seprator {
+  background-color: #323437;
+  width:7px;
+  margin: auto 10px;
+  height: 30px;
+  border-radius: 5px;
+
+}

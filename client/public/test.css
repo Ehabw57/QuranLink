@@ -1,0 +1,79 @@
+.test-container input {
+  background-color: transparent;
+  border: 1px solid whitesmoke;
+  outline: none;
+  text-align: center;
+  height: 2em;
+  font-size: 2.2em;
+  font-family: "Uthmani";
+  color: whitesmoke;
+  transition: all 0.3s ease;
+}
+
+.test-container input:focus {
+  border-color: #42c983;
+}
+
+.shake {
+  position: relative;
+  animation: shake 0.4s ease-in-out;
+}
+
+.correct {
+  scale: 1.07;
+  text-shadow:
+  0 0 5px #00ff00,
+  0 0 10px #55ff55,
+  0 0 20px #aaffaa;
+}
+
+
+@keyframes shake {
+  0%, 100% { color: white; left: 0; }
+  25% { left: -5px; }
+  50% { color: black; background-color: #f23232; left: 5px; }
+  75% { left: -5px; }
+}
+
+.test-container {
+  width: 100%;
+  margin-top: 2%;
+  height: 30vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.verseBlock {
+  display: contents;
+}
+.test-container > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px 6px;
+  width: 80%;
+  margin: auto;
+  direction: rtl;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.test-container .words-test {
+  justify-content: center;
+}
+
+
+@font-face {
+  font-family: "Uthmani";
+  src: url('./assets/fonts/Uthmanic.woff') format('woff');
+}
+
+p.quran-text {
+  font-family: "Uthmani";
+  font-size: 2.5em;
+  transition: all 1.0s ease;
+}
+
+p.dashes {
+  font-size: 1.7em;
+}

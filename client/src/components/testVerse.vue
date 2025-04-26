@@ -1,23 +1,24 @@
 <template>
-  <div class="testContaner">
-    <displayWord v-for="(word, index) in oriVerses[0].text" :key="index">{{ word }}</displayWord>
-    <displayWord>{{ oriVerses[0].glyph_number }}</displayWord>
-    <div class="verseBlock" v-for="(verse, verseIndex) in verses" :key="verse.id">
-      <div class="wordContainer" v-for="(word, wordIndex) in verse.text" :key="wordIndex">
-        <displayWord v-if="isWordCorrect(verseIndex, wordIndex)">{{ word }}</displayWord>
+  <p class="quran-text" v-for="(word, index) in verses[0].text" :key="index">{{ word }}</p>
+  <p class="quran-text">{{ verses[0].glyph_number }}</p>
 
-        <inputBox
-          v-else-if="isCurrentInput(verseIndex, wordIndex)"
-          :ref="`input-${verseIndex}-${wordIndex}`"
-          :expected="verse.simple_text[wordIndex]"
-          @correct="handleCorrect(verseIndex, wordIndex)"
-        />
 
-        <displayWord v-else>{{ store.generateDashes(verse.simple_text[wordIndex].length) }}</displayWord>
-      </div>
+  <div class="verseBlock" v-if="verses[1]">
+  <div v-for="(word, index) in verses[1].text" :key="index">
 
-      <displayWord>{{ verse.glyph_number }}</displayWord>
+      <inputBox
+      v-if="activeIndex === index"
+      ref="inputs"
+      :expected="verses[1].simple_text[index]"
+      @correct="handleCorrect()"
+      />
+
+      <p class="correct quran-text" v-else-if="activeIndex > index" ref="words">{{ word }}</p>
+      <p class="dashes" v-else>{{ store.generateDashes(verses[1].simple_text[index].length) }}</p>
+
     </div>
+
+    <p class="quran-text">{{ verses[1].glyph_number }}</p>
   </div>
 </template>
 
@@ -26,99 +27,50 @@
 
 export default {
   props: {
-    oriVerses: { type: Array, required: true },
+    verses: { type: Array, required: true },
     modelValue: {type: Number, required:true}
   },
+  emits: ['done', 'update:modelValue'],
   data() {
     return {
       store,
-      verses: [],
-      activeVerse: 0, 
-      activeWord: 0,    
-      correctWords: {}  
+      activeIndex: 0
     };
   },
   methods: {
-    setUp() {
-      this.activeVerse = 0;
-      this.activeWord = 0;
-      this.correctWords = {};
-      this.verses = this.oriVerses.slice(1);
-      this.$nextTick(() => {
-        const firstInput = this.$refs[`input-0-0`]?.[0];
-        this.store.setCurrentInput(firstInput);
-        firstInput.focus();
-      });
-      this.$emit('update:modelValue', this.verses[this.activeVerse].surah_id)
-    },
-    isWordCorrect(verseIndex, wordIndex) {
-      return this.correctWords[`${verseIndex}-${wordIndex}`];
-    },
-    isCurrentInput(verseIndex, wordIndex) {
-      return verseIndex === this.activeVerse && wordIndex === this.activeWord;
-    },
-    handleCorrect(verseIndex, wordIndex) {
-      this.correctWords[`${verseIndex}-${wordIndex}`] = true;
-
-      if (wordIndex + 1 < this.verses[verseIndex].text.length) {
-        this.activeWord++;
-      } else {
-        if (verseIndex + 1 < this.verses.length) {
-          this.activeVerse++;
-          this.activeWord = 0;
-        } else {
-          this.$emit('done');
-        }
+    async handleCorrect() {
+      const questionVerse = this.verses[1];
+      if(this.activeIndex === questionVerse.text.length - 1) {
+        this.$emit('done');
+        return;
       }
-
-      this.$nextTick(() => {
-        const nextInput = this.$refs[`input-${this.activeVerse}-${this.activeWord}`]?.[0];
-          this.store.setCurrentInput(nextInput);
-          nextInput.focus();
-      });
-      this.$emit('update:modelValue', this.verses[this.activeVerse].surah_id)
+      this.activeIndex++;
+      await this.focusInput();
+      this.$refs.words[this.activeIndex - 1].classList.remove('correct');
+      this.$emit('update:modelValue', questionVerse.surah_id)
     },
+
+    async focusInput() {
+      await this.$nextTick();
+      if (this.$refs.inputs?.length > 0){
+        const input = this.$refs.inputs[0];
+        this.store.setCurrentInput(input);
+        input.focus();
+      }
+    },
+
     restartTest() {
-      this.activeVerse = 0;
-      this.activeWord = 0;
-      for (const key in this.correctWords) {
-        this.correctWords[key] = false;
-      }
-      this.setUp()
+      this.activeIndex = 0;
+      this.focusInput();
     }
   },
   watch: {
-    oriVerses: {
+    verses: {
       handler() {
-        this.setUp()
+        this.restartTest();
       },
-       immediate: true
+      immediate: true
     }
   }
 };
 </script>
-
-<style scoped>
-.testContaner {
-  display: flex;
-  margin:0 auto;
-  width: 70vw;
-  flex-wrap: wrap; 
-  justify-content: center; 
-  direction: rtl; 
-  overflow: hidden;
-  height: 15.1vh;
-}
-
-.verseBlock {
-  display: contents; 
-}
-
-.wordContainer {
-  white-space: nowrap; 
-}
-    .dashes {
-      font-size: 10px;
-    }
-</style>
-

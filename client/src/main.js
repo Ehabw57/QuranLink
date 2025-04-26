@@ -5,7 +5,6 @@ import ButtonOptions from './components/ButtonOptions.vue'
 import RangeSelector from './components/RangeSelector.vue'
 import VerseSelector from './components/VerseSelector.vue'
 import SurahBorder from './components/SurahBorder.vue'
-import displayWord from './components/displayWord.vue'
 import inputBox from './components/inputBox.vue'
 import testVerse from './components/testVerse.vue'
 import testWord from './components/testWord.vue'
@@ -17,7 +16,6 @@ app
   .component('RangeSelector', RangeSelector)
   .component('VerseSelector', VerseSelector)
   .component('SurahBorder', SurahBorder)
-  .component('displayWord', displayWord)
   .component('inputBox', inputBox)
   .component('testVerse', testVerse)
   .component('testWord', testWord)

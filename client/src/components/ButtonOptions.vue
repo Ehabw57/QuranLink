@@ -21,24 +21,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.button-group {
-  display: flex;
-  gap: 8px;
-}
-
-button {
-  background: none;
-  border: none;
-  color: #007bff;
-  cursor: pointer;
-  font-size: 10px;
-  padding: 4px 8px;
-}
-
-button.active {
-  color: #cc2;
-}
-</style>
-

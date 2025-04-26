@@ -1,0 +1,28 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body, #app{
+  background-color: #323437;
+  color: #D1D0C5;
+  display: block;
+  height: 100vh;
+}
+button {
+  font-size: inherit;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  margin: 0 4px;
+  transition: all 0.4s ease-in-out;
+}
+
+button.active {
+  color: #E2B714;
+  text-shadow:
+  0 0 2px #ff0000;
+}
