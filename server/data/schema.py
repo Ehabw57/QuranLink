@@ -21,6 +21,3 @@ class VerseRespond(BaseModel):
     rub: int
 
 
-class PageRespond(BaseModel):
-    question: VerseRespond
-    answer: VerseRespond

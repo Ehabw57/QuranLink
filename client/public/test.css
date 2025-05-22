@@ -1,25 +1,41 @@
-.test-container input {
+.test-container .input {
   background-color: transparent;
   border: 1px solid whitesmoke;
   outline: none;
   text-align: center;
   height: 2em;
-  font-size: 2.2em;
+  font-size: 2em;
   font-family: "Uthmani";
   color: whitesmoke;
   transition: all 0.3s ease;
 }
 
-.test-container input:focus {
+.test-container .input:focus {
   border-color: #42c983;
 }
 
+.test-buttons {
+  margin-top: 40px;
+  padding: 0 20%;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.test-buttons > i {
+  font-size: clamp(1.3em, 2vw, 2em);
+}
+
+.test-buttons > div i:hover {
+  color: #ec3;
+}
 .shake {
   position: relative;
   animation: shake 0.4s ease-in-out;
 }
 
 .correct {
+  color: #ffe0b0;
   scale: 1.07;
   text-shadow:
   0 0 5px #00ff00,
@@ -70,10 +86,11 @@
 
 p.quran-text {
   font-family: "Uthmani";
-  font-size: 2.5em;
-  transition: all 1.0s ease;
+  font-size: clamp(1.8em, 3vw, 2.8em);
+  transition: all 0.4s ease;
 }
 
 p.dashes {
   font-size: 1.7em;
 }
+

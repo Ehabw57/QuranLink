@@ -1,12 +1,14 @@
 <template>
-  <input 
-  ref="input"
-  :class="{'shake': isShaking}"
-  type="text"
-  v-model="inputValue"
-  @input="handleInput"
-  @keydown="handleKeydown"
-  :style="{ width: inputWidth }">
+  <textarea 
+    rows='1'
+    ref="input"
+    class="input"
+    :class="{'shake': isShaking}"
+    type="textara"
+    v-model="inputValue"
+    @input="handleInput"
+    :style="{ width: inputWidth }">
+  </textarea>
 </template>
 
   <script>
@@ -27,12 +29,17 @@
       },
       computed: {
         inputWidth() {
-          return `${this.expected.length}ch`;
+          return `${this.expected.length + 1}ch`;
         }
       },
       methods: {
         handleInput () {
-          this.inputValue = this.inputValue.trim();
+          if (this.inputValue[this.inputValue.length -1] === ' '){
+            this.addHint();
+          }
+          if (this.inputValue[this.inputValue.length -1] === '\n'){
+            this.emitCorrect();
+          }
           if (this.inputValue.length == this.expected.length) {
             if (this.simplifyText(this.inputValue) === this.simplifyText(this.expected)) {
               this.emitCorrect();
@@ -43,12 +50,6 @@
                 this.isShaking = false;
               },400)
             }
-          }
-        },
-        handleKeydown(event) {
-          if (event.shiftKey) {
-            if (event.code === 'Enter') this.emitCorrect();
-            if (event.code === 'Space') this.addHint();
           }
         },
         addHint() {

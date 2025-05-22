@@ -4,7 +4,7 @@
 
 
   <div class="verseBlock" v-if="verses[1]">
-  <div v-for="(word, index) in verses[1].text" :key="index">
+    <div v-for="(word, index) in verses[1].text" :key="index">
 
       <inputBox
       v-if="activeIndex === index"
@@ -25,52 +25,44 @@
 <script>
   import { store } from '../store.js';
 
-export default {
-  props: {
-    verses: { type: Array, required: true },
-    modelValue: {type: Number, required:true}
-  },
-  emits: ['done', 'update:modelValue'],
-  data() {
-    return {
-      store,
-      activeIndex: 0
-    };
-  },
-  methods: {
-    async handleCorrect() {
-      const questionVerse = this.verses[1];
-      if(this.activeIndex === questionVerse.text.length - 1) {
-        this.$emit('done');
-        return;
-      }
-      this.activeIndex++;
-      await this.focusInput();
-      this.$refs.words[this.activeIndex - 1].classList.remove('correct');
-      this.$emit('update:modelValue', questionVerse.surah_id)
+  export default {
+    props: {
+      verses: { type: Array, required: true },
     },
-
-    async focusInput() {
-      await this.$nextTick();
-      if (this.$refs.inputs?.length > 0){
-        const input = this.$refs.inputs[0];
-        this.store.setCurrentInput(input);
-        input.focus();
-      }
+    emits: ['done'],
+    data() {
+      return {
+        store,
+        activeIndex: 0
+      };
     },
-
-    restartTest() {
-      this.activeIndex = 0;
-      this.focusInput();
-    }
-  },
-  watch: {
-    verses: {
-      handler() {
-        this.restartTest();
+    methods: {
+      async handleCorrect() {
+        const questionVerse = this.verses[1];
+        if(this.activeIndex === questionVerse.text.length - 1) {
+          this.$emit('done');
+        } else {
+          this.activeIndex++;
+          await this.focusInput();
+          const word = this.$refs.words[this.activeIndex - 1]
+          await this.store.delay(600);
+          word.classList.remove('correct');
+        }
       },
-      immediate: true
-    }
-  }
-};
+
+      async focusInput() {
+        await this.$nextTick();
+        if (this.$refs.inputs?.length > 0){
+          const input = this.$refs.inputs[0];
+          this.store.setCurrentInput(input);
+          input.focus();
+        }
+      },
+
+      restartTest() {
+        this.activeIndex = 0;
+        this.focusInput();
+      }
+    },
+  };
 </script>

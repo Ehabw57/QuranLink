@@ -4,12 +4,17 @@
   box-sizing: border-box;
 }
 
-body, #app{
+body{
   background-color: #323437;
   color: #D1D0C5;
   display: block;
-  height: 100vh;
+  height: min(100vi, 100vh);
 }
+
+#app {
+  position: relative;
+}
+
 button {
   font-size: inherit;
   background-color: transparent;
@@ -18,11 +23,19 @@ button {
   cursor: pointer;
   color: inherit;
   margin: 0 4px;
-  transition: all 0.4s ease-in-out;
 }
 
-button.active {
-  color: #E2B714;
-  text-shadow:
-  0 0 2px #ff0000;
+button:hover {
+  color: #aaa;
 }
+
+.active {
+  color: #E2B714;
+}
+
+select {
+  background-color: #444;
+  color: inherit;
+  border: none;
+}
+

@@ -15,12 +15,9 @@ export const store = reactive({
     return array;
   },
 
-  chunkArray(array, size) {
-    const chunks = [];
-    for (let i = 0; i < array.length; i += size) {
-      chunks.push(array.slice(i, i + size));
-    }
-    return chunks;
+
+  delay(ms) {
+    return new Promise(reslove => setTimeout(reslove, ms))
   },
 
   generateDashes(length) {
