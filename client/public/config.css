@@ -1,8 +1,6 @@
 .config {
   max-width: 80%; height: 50px;
   margin: 0 auto;
-  background-color: #2C2E31;
-  border-radius: 6px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -11,13 +9,17 @@
   font-size: 16px;
 }
 
-.config > div {
-  display: inline;
+
+.config-item {
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: flex;
 }
 
 
 div.seprator {
-  background-color: #323437;
+  background-color: var(--color-bg);
   width:7px;
   margin: auto 10px;
   height: 30px;
@@ -48,12 +50,12 @@ div.seprator {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: var(--color-backdrop);
   z-index: 1;
 }
 
 .close {
-  color: #fff;
+  color: var(--color-text);
   float: right;
   font-size: 20px;
   margin: 22px;
@@ -65,10 +67,10 @@ div.seprator {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #322;
+  background-color: var(--color-surface);
   width: 95%;
   padding: 20px;
-  border: 1px solid #995;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   font-family: sans-serif;
   font-size: 1.6em;

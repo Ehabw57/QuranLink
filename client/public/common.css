@@ -4,15 +4,94 @@
   box-sizing: border-box;
 }
 
+:root {
+  --color-bg: #323437;
+  --color-text: #D1D0C5;
+  --color-muted: #9AA0A6;
+  --color-surface: #3a3c40;
+  --color-border: rgba(100,90,90,0.6);
+  --color-hover: #aaaaaa;
+
+  --color-accent: #0ea5e9;
+  --color-accent-2: #22c55e;
+  --color-accent-active: #0284c7;
+
+  --color-active: #E2B714;
+  --color-danger: #f23232;
+  --color-backdrop: rgba(0,0,0,0.4);
+}
+
+[data-theme="light"] {
+  --color-bg: #f6f7fb;
+  --color-text: #1f2937;
+  --color-muted: #6b7280;
+  --color-surface: #ffffff;
+  --color-border: rgba(0,0,0,0.08);
+  --color-hover: #374151;
+
+  --color-accent: #2563eb;
+  --color-accent-2: #16934a;
+  --color-accent-active: #1d4ed8;
+  --color-active: #b45309;
+  --color-danger: #dc2626;
+  --color-backdrop: rgba(0,0,0,0.35);
+}
+
 body{
-  background-color: #323437;
-  color: #D1D0C5;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  height: 100svh;
+  width: 100vw;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 30px;
+  margin-bottom: 10px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header .logo {
+  background-image: url('./assets/Logo.png');
+  background-position: center;
+  background-size: cover;
+  width: 28px;
+  height: 28px;
+}
+.site-header h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  flex: 1;
+}
+.site-header .settings {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+.site-header .settings:hover {
+  background: var(--color-header-border);
+}
+
+.site-footer {
   display: block;
-  height: min(100vi, 100vh);
+  padding: 12px 16px;
+  text-align: center;
+  color: var(--color-muted);
+  border-top: 1px solid var(--color-border);
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 #app {
-  position: relative;
+  flex: 1 1 0;
 }
 
 button {
@@ -25,17 +104,27 @@ button {
   margin: 0 4px;
 }
 
-button:hover {
-  color: #aaa;
+button:hover, i:hover {
+  color: var(--color-hover);
 }
 
 .active {
-  color: #E2B714;
+  color: var(--color-active);
 }
 
 select {
-  background-color: #444;
+  background-color: var(--color-surface);
   color: inherit;
   border: none;
 }
 
+
+@media all and (max-height: 600px) {
+  .site-header{
+    display: none;
+  }
+
+  .site-footer {
+    display: none;
+  }
+}

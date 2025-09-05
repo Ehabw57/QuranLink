@@ -1,11 +1,28 @@
 <template>
+
+  <header class="site-header">
+    <div class="logo"></div>
+    <h1>Quran Link</h1>
+    <button class="lang-toggle" @click="toggleLanguage">{{ language === 'en' ? 'ع' : 'EN' }}</button>
+    <i class="fa-solid" :class="[theme === 'dark' ? 'fa-sun' : 'fa-moon']" @click="toggleTheme"></i>
+    <button class="settings" @click="isModalOpend = true" aria-label="Open settings">
+      <i class="fa-solid fa-gear"></i>
+    </button>
+  </header>
+
+
   <div class="desktop-only config">
-    <ButtonOptions :options="modes" v-model="mode" />
+    <div class="config-item"><i class="fa-solid fa-layer-group" title="Mode"></i> <ButtonOptions :options="modes" v-model="mode" /></div>
     <div class="seprator"></div>
-    <ButtonOptions :options="ranges" v-model="range" />
+    <div class="config-item"><i class="fa-solid fa-sliders" title="Range Type"></i> <ButtonOptions :options="ranges" v-model="range" /></div>
     <div class="seprator"></div>
-    <VerseSelector @change="fetchVerses" v-if="range=='key'" :chapters="chapters" v-model="verseRangeValue" />
-    <RangeSelector @change="fetchVerses" :limit='rangeLimit' v-else v-model="rangeValue"/>
+    <div class="config-item" v-if="range=='key'">
+      <i class="fa-solid fa-book-open-reader" title="Verse Range"></i> <VerseSelector @change="fetchVerses" :chapters="chapters" v-model="verseRangeValue" />
+    </div>
+    <div class="config-item" v-else>
+      <i class="fa-solid fa-hashtag" title="Numeric Range"></i>
+      <RangeSelector @change="fetchVerses" :limit='rangeLimit' v-model="rangeValue"/>
+    </div>
     <div class="seprator"></div>
   </div>
 
@@ -17,22 +34,26 @@
       <h1>Test Config</h1>
 
       <div>
+        <i class="fa-solid fa-layer-group" title="Mode"></i>
         <ButtonOptions :options="modes" v-model="mode" />
       </div>
 
       <div>
+        <i class="fa-solid fa-sliders" title="Range Type"></i>
         <ButtonOptions :options="ranges" v-model="range" />
       </div>
 
-      <VerseSelector @change="fetchVerses" v-if="range=='key'" :chapters="chapters" v-model="verseRangeValue" />
-      <RangeSelector @change="fetchVerses" :limit='rangeLimit' v-else v-model="rangeValue"/>
+      <div v-if="range=='key'">
+        <i class="fa-solid fa-book-open-reader" title="Verse Range"></i>
+        <VerseSelector @change="fetchVerses" :chapters="chapters" v-model="verseRangeValue" />
+      </div>
+      <div v-else>
+        <i class="fa-solid fa-hashtag" title="Numeric Range"></i>
+        <RangeSelector @change="fetchVerses" :limit='rangeLimit' v-model="rangeValue"/>
+      </div>
     </div>
   </div>
 
-  <div @click="isModalOpend = true" class="mobile-only config">
-    <i class="fa-solid fa-gear"></i>
-    <label>Test Config</label>
-  </div>
 
 
 
@@ -66,6 +87,10 @@
     <i class="fa-solid fa-angles-left" @click="handelDone"></i>
   </div>
 
+  <footer class="site-footer">
+    <span>CopyRight 2025 @Ehab Hegazy</span>
+  </footer>
+
 </template>
 
 <script>
@@ -86,7 +111,9 @@ import {store} from './store.js';
         range: 'page',
         rangeValue: {start: 3, end:4},
         verseRangeValue: {startChapter: 1, startVerse: 1, endChapter: 1, endVerse: 7},
-        loading: true
+        loading: true,
+        theme: 'dark',
+        language: 'en'
       }
     },
     computed: {
@@ -107,9 +134,45 @@ import {store} from './store.js';
     },
 
     methods: {
+      onEscKey(event) {
+        if (event.key === 'Escape' && this.isModalOpend) {
+          this.isModalOpend = false;
+        }
+      },
+      applyTheme(theme) {
+        const root = document.documentElement;
+        const surahBorder = document.getElementsByClassName('border-image')[0];
+
+        if (theme === 'light') {
+          root.setAttribute('data-theme', 'light');
+          surahBorder.style.backgroundImage = 'url("./assets/Surah-border-light.png")';
+        } else {
+          root.removeAttribute('data-theme');
+          surahBorder.style.backgroundImage = 'url("./assets/Surah-border-dark.png")'
+
+        }
+        this.theme = theme;
+        try { localStorage.setItem('theme', theme); } catch (e) {console.log(e)}
+      },
+      toggleTheme() {
+        const next = this.theme === 'light' ? 'dark' : 'light';
+        this.applyTheme(next);
+      },
+      applyLanguage(lang) {
+        const root = document.documentElement;
+        const dir = lang === 'ar' ? 'rtl' : 'ltr';
+        root.setAttribute('lang', lang);
+        root.setAttribute('dir', dir);
+        this.language = lang;
+        try {localStorage.setItem('language', lang); } catch (e) { console.log(e) }
+      },
+      toggleLanguage() {
+        const next = this.language === 'ar' ? 'en' : 'ar';
+        this.applyLanguage(next);
+      },
       async fetchChapters() {
         this.loading = true;
-        const response = await fetch("http://192.168.1.72:8000/surahs");
+        const response = await fetch("http://localhost:8000/surahs");
         this.chapters = await response.json();
       },
 
@@ -122,7 +185,7 @@ import {store} from './store.js';
           range_value: this.range === "key" ? `${startChapter}:${startVerse}-${endChapter}:${endVerse}` : `${start}:${end}`,
         }).toString();
 
-        const response = await fetch(`http://192.168.1.72:8000/verses?${params}`);
+        const response = await fetch(`http://localhost:8000/verses?${params}`);
         this.verses = await response.json();
 
         this.activeVerse = 0;
@@ -157,6 +220,27 @@ import {store} from './store.js';
     async created() {
       await this.fetchChapters()
       await this.fetchVerses()
+    },
+    mounted() {
+      window.addEventListener('keydown', this.onEscKey);
+      let initial = 'dark';
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') initial = saved;
+        else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) initial = 'light';
+      } catch (e) {console.log(e)}
+      this.applyTheme(initial);
+
+      // Initialize language
+      let initialLang = 'en';
+      try {
+        const savedLang = localStorage.getItem('language');
+        if (savedLang === 'ar' || savedLang === 'en') initialLang = savedLang;
+      } catch (e) { console.log(e) }
+      this.applyLanguage(initialLang);
+    },
+    beforeUnmount() {
+      window.removeEventListener('keydown', this.onEscKey);
     },
   }
 </script>

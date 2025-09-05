@@ -1,17 +1,18 @@
 .test-container .input {
   background-color: transparent;
-  border: 1px solid whitesmoke;
+  border: 1px solid var(--color-border);
   outline: none;
   text-align: center;
   height: 2em;
-  font-size: 2em;
+  font-size: clamp(1.3em, 2vw, 2em);
   font-family: "Uthmani";
-  color: whitesmoke;
+  color: var(--color-text);
+  resize: none;
   transition: all 0.3s ease;
 }
 
 .test-container .input:focus {
-  border-color: #42c983;
+  border-color: var(--color-accent-2);
 }
 
 .test-buttons {
@@ -27,7 +28,7 @@
 }
 
 .test-buttons > div i:hover {
-  color: #ec3;
+  color: var(--color-active);
 }
 .shake {
   position: relative;
@@ -35,19 +36,18 @@
 }
 
 .correct {
-  color: #ffe0b0;
+  color: var(--color-active);
   scale: 1.07;
   text-shadow:
-  0 0 5px #00ff00,
-  0 0 10px #55ff55,
-  0 0 20px #aaffaa;
+  0 0 10px var(--color-accent-2),
+  0 0 20px var(--color-accent-2);
 }
 
 
 @keyframes shake {
-  0%, 100% { color: white; left: 0; }
+  0%, 100% { color: var(--color-text); left: 0; }
   25% { left: -5px; }
-  50% { color: black; background-color: #f23232; left: 5px; }
+  50% { color: var(--color-text); background-color: var(--color-danger); left: 5px; }
   75% { left: -5px; }
 }
 
@@ -86,11 +86,8 @@
 
 p.quran-text {
   font-family: "Uthmani";
-  font-size: clamp(1.8em, 3vw, 2.8em);
+  font-size: clamp(1.2em, 4vw, 2.8em);
   transition: all 0.4s ease;
 }
 
-p.dashes {
-  font-size: 1.7em;
-}
 

@@ -81,6 +81,7 @@ export default {
       }
 
       this.$emit("update:modelValue", updatedValue);
+      this.$emit("change", updatedValue);
     },
   },
 };

@@ -1,5 +1,6 @@
 <template>
   <textarea 
+    tabindex="1"
     rows='1'
     ref="input"
     class="input"
