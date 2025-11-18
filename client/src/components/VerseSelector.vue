@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label>Start:</label>
+    <label>{{ $t('labels.start') }}:</label>
     <select @change="updateModel('startChapter', $event.target.value)" :value="modelValue.startChapter">
       <option v-for="chapter in chapters" :key="chapter.id" :value="chapter.id">
       {{ chapter.id }}-{{ chapter.en_name }}
@@ -12,7 +12,7 @@
   </div>
 
   <div>
-    <label>End:</label>
+    <label>{{ $t('labels.end') }}:</label>
     <select @change="updateModel('endChapter', $event.target.value)" :value="modelValue.endChapter">
       <option v-for="chapter in filteredChapters" :key="chapter.id" :value="chapter.id">
       {{ chapter.id }}-{{ chapter.en_name }}
