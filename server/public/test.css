@@ -1,0 +1,93 @@
+.test-container .input {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  outline: none;
+  text-align: center;
+  height: 2em;
+  font-size: clamp(1.3em, 2vw, 2em);
+  font-family: "Uthmani";
+  color: var(--color-text);
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.test-container .input:focus {
+  border-color: var(--color-accent-2);
+}
+
+.test-buttons {
+  margin-top: 40px;
+  padding: 0 20%;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.test-buttons > i {
+  font-size: clamp(1.3em, 2vw, 2em);
+}
+
+.test-buttons > div i:hover {
+  color: var(--color-active);
+}
+.shake {
+  position: relative;
+  animation: shake 0.4s ease-in-out;
+}
+
+.correct {
+  color: var(--color-active);
+  scale: 1.07;
+  text-shadow:
+  0 0 10px var(--color-accent-2),
+  0 0 20px var(--color-accent-2);
+}
+
+
+@keyframes shake {
+  0%, 100% { color: var(--color-text); left: 0; }
+  25% { left: -5px; }
+  50% { color: var(--color-text); background-color: var(--color-danger); left: 5px; }
+  75% { left: -5px; }
+}
+
+.test-container {
+  width: 100%;
+  margin-top: 2%;
+  height: 30vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.verseBlock {
+  display: contents;
+}
+.test-container > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px 6px;
+  width: 80%;
+  margin: auto;
+  direction: rtl;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.test-container .words-test {
+  justify-content: center;
+}
+
+
+@font-face {
+  font-family: "Uthmani";
+  src: url('./assets/fonts/Uthmanic.woff') format('woff');
+}
+
+p.quran-text {
+  font-family: "Uthmani";
+  font-size: clamp(1.2em, 4vw, 2.8em);
+  transition: all 0.4s ease;
+}
+
+

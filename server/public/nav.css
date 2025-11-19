@@ -1,0 +1,24 @@
+nav {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid var(--color-border) ;
+  margin-bottom: 35px;
+  padding: 10px;
+}
+
+nav > * {
+  width: 33.3%;
+  text-align: center;
+}
+
+.theme-toggle {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.theme-toggle:hover {
+  color: var(--color-hover);
+}

@@ -119,7 +119,9 @@ import { useToast } from "vue-toastification";
         verseRangeValue: {startChapter: 1, startVerse: 1, endChapter: 1, endVerse: 7},
         loading: true,
         theme: 'dark',
-        apiUrl: process.env.VUE_APP_API_URL || 'http://localhost:8000'
+        // Use runtime-injected API URL if available (injected by server),
+        // otherwise fall back to build-time env or localhost.
+        apiUrl: (typeof window !== 'undefined' && window.__API_URL__) || process.env.VUE_APP_API_URL || 'http://localhost:8000'
       }
     },
     computed: {

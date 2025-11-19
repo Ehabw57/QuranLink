@@ -1,4 +1,8 @@
-from fastapi import FastAPI
+import os
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from pathlib import Path
 from modules import Storage
 from utils.validate_range import validate_range
 from data.schema import VerseRespond, SurahRespond
@@ -16,6 +20,25 @@ app.add_middleware(
     allow_origins=["*"],
     allow_credentials=True,
 )
+
+
+@app.middleware("http")
+async def inject_api_url(request: Request, call_next):
+    if request.url.path != "/":
+        return await call_next(request)
+    try:
+        index_path = Path("public") / "index.html"
+        if index_path.exists():
+            content = index_path.read_text(encoding="utf-8")
+        api_url = os.environ.get("API_URL")
+        print(f"API_URL from env: {api_url}")
+        if not api_url:
+            api_url = str(request.base_url).rstrip("/")
+        script = f"<script>window.__API_URL__ = '{api_url}';</script>"
+        content = content.replace("</head>", script + "</head>")
+        return HTMLResponse(content=content, status_code=200)
+    except Exception:
+        pass
 
 
 @app.get("/surahs", response_model=List[SurahRespond])
@@ -45,3 +68,6 @@ def get_pages(pages: str):
             pairs.append(first_ayah_in_page)
             pairs.append(last_ayah_in_page)
     return pairs
+
+
+app.mount("/", StaticFiles(directory="public", html=True), name="static")
