@@ -1,7 +1,9 @@
 {
   "app": {
-    "title": "Quran Link",
-    "copyright": "CopyRight 2025 © Ehab Hegazy"
+    "title": "Quran Link"
+  },
+  "footer": {
+    "about": "An interactive Quran memorization tool designed to help you practice and perfect your Hifz journey"
   },
   "header": {
     "settings": "Settings"

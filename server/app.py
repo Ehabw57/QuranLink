@@ -28,8 +28,10 @@ async def inject_api_url(request: Request, call_next):
         return await call_next(request)
     try:
         index_path = Path("public") / "index.html"
-        if index_path.exists():
-            content = index_path.read_text(encoding="utf-8")
+        if not index_path.exists():
+            return await call_next(request)
+            
+        content = index_path.read_text(encoding="utf-8")
         api_url = os.environ.get("API_URL")
         print(f"API_URL from env: {api_url}")
         if not api_url:
@@ -37,8 +39,9 @@ async def inject_api_url(request: Request, call_next):
         script = f"<script>window.__API_URL__ = '{api_url}';</script>"
         content = content.replace("</head>", script + "</head>")
         return HTMLResponse(content=content, status_code=200)
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"Error injecting API URL: {e}")
+        return await call_next(request)
 
 
 @app.get("/surahs", response_model=List[SurahRespond])

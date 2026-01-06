@@ -1,14 +1,18 @@
 <template>
-  <div>
-    <label for="start">{{ $t('labels.start') }}:</label>
-    <select id="start" :value="modelValue.start" @change="updateStart($event.target.value)">
-      <option v-for="i in limit" :key="i" :value="i">{{ i }}</option>
-    </select>
+  <div style="display: flex; gap: 10px; align-items: center;">
+    <span>
+      <label for="start">{{ $t('labels.start') }}:</label>
+      <select id="start" :value="modelValue.start" @change="updateStart($event.target.value)">
+        <option v-for="i in limit" :key="i" :value="i">{{ i }}</option>
+      </select>
+    </span>
 
-    <label for="end">{{ $t('labels.end') }}:</label>
-    <select id="end" :value="modelValue.end" @change="updateEnd($event.target.value)">
-      <option v-for="i in limit" :key="i" :value="i">{{ i }}</option>
-    </select>
+    <span> 
+      <label for="end">{{ $t('labels.end') }}:</label>
+      <select id="end" :value="modelValue.end" @change="updateEnd($event.target.value)">
+        <option v-for="i in limit" :key="i" :value="i">{{ i }}</option>
+      </select>
+    </span>
   </div>
 </template>
 

@@ -13,9 +13,7 @@
 
   <div class="desktop-only config">
     <div class="config-item"><i class="fa-solid fa-layer-group" :title="$t('config.mode')"></i> <ButtonOptions :options="modeOptions" v-model="mode" /></div>
-    <div class="seprator"></div>
     <div class="config-item"><i class="fa-solid fa-sliders" :title="$t('config.rangeType')"></i> <ButtonOptions :options="rangeOptions" v-model="range" /></div>
-    <div class="seprator"></div>
     <div class="config-item" v-if="range=='key'">
       <i class="fa-solid fa-book-open-reader" :title="$t('config.verseRange')"></i> <VerseSelector @change="fetchVerses" :chapters="chapters" v-model="verseRangeValue" />
     </div>
@@ -23,32 +21,43 @@
       <i class="fa-solid fa-hashtag" :title="$t('config.numericRange')"></i>
       <RangeSelector @change="fetchVerses" :limit='rangeLimit' v-model="rangeValue"/>
     </div>
-    <div class="seprator"></div>
   </div>
 
 
-  <div v-show="isModalOpend"  class="modal"> 
-    <i @click="isModalOpend = false" class="close fa-solid fa-xmark"></i>
+  <div v-show="isModalOpend"  class="modal" @click.self="isModalOpend = false"> 
     <div class="modal-content">
+      <i @click="isModalOpend = false" class="close fa-solid fa-xmark"></i>
 
       <h1>{{ $t('modal.testConfig') }}</h1>
 
       <div>
-        <i class="fa-solid fa-layer-group" :title="$t('config.mode')"></i>
+        <label>
+          <i class="fa-solid fa-layer-group"></i>
+          {{ $t('config.mode') }}
+        </label>
         <ButtonOptions :options="modeOptions" v-model="mode" />
       </div>
 
       <div>
-        <i class="fa-solid fa-sliders" :title="$t('config.rangeType')"></i>
+        <label>
+          <i class="fa-solid fa-sliders"></i>
+          {{ $t('config.rangeType') }}
+        </label>
         <ButtonOptions :options="rangeOptions" v-model="range" />
       </div>
 
       <div v-if="range=='key'">
-        <i class="fa-solid fa-book-open-reader" :title="$t('config.verseRange')"></i>
+        <label>
+          <i class="fa-solid fa-book-open-reader"></i>
+          {{ $t('config.verseRange') }}
+        </label>
         <VerseSelector @change="fetchVerses" :chapters="chapters" v-model="verseRangeValue" />
       </div>
       <div v-else>
-        <i class="fa-solid fa-hashtag" :title="$t('config.numericRange')"></i>
+        <label>
+          <i class="fa-solid fa-hashtag"></i>
+          {{ $t('config.numericRange') }}
+        </label>
         <RangeSelector @change="fetchVerses" :limit='rangeLimit' v-model="rangeValue"/>
       </div>
     </div>
@@ -88,7 +97,31 @@
   </div>
 
   <footer class="site-footer">
-    <span>{{ $t('app.copyright') }}</span>
+    <div class="footer-content">
+      <div class="footer-about">
+        <h3>{{ $t('app.title') }}</h3>
+        <p>{{ $t('footer.about') }}</p>
+      </div>
+      <div class="footer-social">
+        <div class="social-links">
+          <a href="https://github.com/Ehabw57" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="https://github.com/Ehabw57/QuranLink/" target="_blank" rel="noopener noreferrer" aria-label="Project Repository">
+            <i class="fa-solid fa-code-branch"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/ehababdelrady" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+          <a href="https://ehabw57.github.io/personal_portofolio/" target="_blank" rel="noopener noreferrer" aria-label="Portfolio">
+            <i class="fa-solid fa-globe"></i>
+          </a>
+          <a href="https://www.youtube.com/@mercy_world57" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+    </div>
   </footer>
 
 </template>

@@ -3,7 +3,7 @@
     <label>{{ $t('labels.start') }}:</label>
     <select @change="updateModel('startChapter', $event.target.value)" :value="modelValue.startChapter">
       <option v-for="chapter in chapters" :key="chapter.id" :value="chapter.id">
-      {{ chapter.id }}-{{ chapter.en_name }}
+      {{ chapter.id }}-{{ locale === 'ar' ? chapter.name : chapter.en_name }}
       </option>
     </select>
     <select @change="updateModel('startVerse', $event.target.value)" :value="modelValue.startVerse">
@@ -15,7 +15,7 @@
     <label>{{ $t('labels.end') }}:</label>
     <select @change="updateModel('endChapter', $event.target.value)" :value="modelValue.endChapter">
       <option v-for="chapter in filteredChapters" :key="chapter.id" :value="chapter.id">
-      {{ chapter.id }}-{{ chapter.en_name }}
+      {{ chapter.id }}-{{ locale === 'ar' ? chapter.name : chapter.en_name }}
       </option>
     </select>
     <select @change="updateModel('endVerse', $event.target.value)" :value="modelValue.endVerse">
@@ -25,7 +25,13 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
+  setup() {
+    const { locale } = useI18n();
+    return { locale };
+  },
   props: {
     chapters: {
       type: Array,
