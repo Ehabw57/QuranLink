@@ -3,6 +3,7 @@
   src: url('../assets/fonts/SurahNames.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 .border-container {
@@ -22,7 +23,7 @@
 }
 .surahName {
   font-family: 'SurahName', sans-serif;
-  font-size: clamp(1.4em, 4vw, 2.5em);
+  font-size: 1.6rem;
   position: absolute;
   margin: 0;
   padding: 0;
@@ -30,4 +31,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--color-text);
+}
+
+@media (min-width: 900px) {
+  .surahName { font-size: 2.2rem; }
+}
+
+@media (min-width: 1200px) {
+  .surahName { font-size: 2.6rem; }
 }

@@ -193,10 +193,10 @@ import { useToast } from "vue-toastification";
 
         if (theme === 'light') {
           root.setAttribute('data-theme', 'light');
-          surahBorder.style.backgroundImage = 'url("./assets/Surah-border-light.png")';
+          surahBorder.style.backgroundImage = 'url("./assets/Surah-border-light.svg")';
         } else {
           root.removeAttribute('data-theme');
-          surahBorder.style.backgroundImage = 'url("./assets/Surah-border-dark.png")'
+          surahBorder.style.backgroundImage = 'url("./assets/Surah-border-dark.svg")'
 
         }
         this.theme = theme;

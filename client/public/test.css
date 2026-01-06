@@ -4,7 +4,7 @@
   outline: none;
   text-align: center;
   height: 2em;
-  font-size: clamp(1.3em, 2vw, 2em);
+  font-size: 1.2rem;
   font-family: "Uthmani";
   color: var(--color-text);
   resize: none;
@@ -24,7 +24,7 @@
 }
 
 .test-buttons > i {
-  font-size: clamp(1.3em, 2vw, 2em);
+  font-size: 1.2rem;
 }
 
 .test-buttons > div i:hover {
@@ -82,12 +82,25 @@
 @font-face {
   font-family: "Uthmani";
   src: url('./assets/fonts/Uthmanic.woff') format('woff');
+  font-display: swap;
 }
 
 p.quran-text {
   font-family: "Uthmani";
-  font-size: clamp(1.2em, 4vw, 2.8em);
+  font-size: 1.4rem;
   transition: all 0.4s ease;
+}
+
+@media (min-width: 900px) {
+  .test-container .input { font-size: 1.6rem; }
+  .test-buttons > i { font-size: 1.6rem; }
+  p.quran-text { font-size: 2rem; }
+}
+
+@media (min-width: 1200px) {
+  .test-container .input { font-size: 1.9rem; }
+  .test-buttons > i { font-size: 1.9rem; }
+  p.quran-text { font-size: 2.6rem; }
 }
 
 

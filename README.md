@@ -154,6 +154,17 @@ npm run build
 
 This builds the SPA and outputs to `../server/public` (configured in [client/vue.config.js](client/vue.config.js)), allowing the backend to serve the frontend.
 
+### Provide API URL at build time
+
+The server no longer injects the API URL at request time. Bake the API base URL into the frontend at build time so the SPA knows where to call the backend. For Vue CLI set `VUE_APP_API_URL` before running the build:
+
+```bash
+# example — point the frontend to the production API
+VUE_APP_API_URL=https://api.example.com npm run build
+```
+
+If you use Vite, set `VITE_API_URL` instead and reference it in the app via `import.meta.env.VITE_API_URL`.
+
 ### Features
 
 **Testing Modes:**
