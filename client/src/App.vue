@@ -101,6 +101,10 @@
       <div class="footer-about">
         <h3>{{ $t('app.title') }}</h3>
         <p>{{ $t('footer.about') }}</p>
+        <div class="footer-visits" v-if="visitCount !== null" aria-hidden="false" title="Visits">
+          <i class="fa-solid fa-eye"></i>
+          <span class="visit-count">{{ visitCount }}</span>
+        </div>
       </div>
       <div class="footer-social">
         <div class="social-links">
@@ -152,6 +156,7 @@ import { useToast } from "vue-toastification";
         verseRangeValue: {startChapter: 1, startVerse: 1, endChapter: 1, endVerse: 7},
         loading: true,
         theme: 'dark',
+        visitCount: null,
         // Use runtime-injected API URL if available (injected by server),
         // otherwise fall back to build-time env or localhost.
         apiUrl: (typeof window !== 'undefined' && window.__API_URL__) || process.env.VUE_APP_API_URL || 'http://localhost:8000'
@@ -333,7 +338,21 @@ import { useToast } from "vue-toastification";
         this.mode === 'words'
           ?this.$refs.wordsTest.restartTest() 
           :this.$refs.verseTest.restartTest();
-      }
+      },
+
+      async fetchVisitCount() {
+        try {
+          const response = await fetch('https://abacus.jasoncameron.dev/hit/quranlink.app/visits', { cache: 'no-store' });
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          const json = await response.json();
+          if (json && typeof json.value !== 'undefined') {
+            this.visitCount = json.value;
+          }
+        } catch (err) {
+          console.error('Error fetching visit count:', err);
+          this.visitCount = null;
+        }
+      },
     },
 
     async created() {
@@ -358,6 +377,7 @@ import { useToast } from "vue-toastification";
         if (savedLang === 'ar' || savedLang === 'en') initialLang = savedLang;
       } catch (e) { console.log(e) }
       this.applyLanguage(initialLang);
+      this.fetchVisitCount();
     },
     beforeUnmount() {
       window.removeEventListener('keydown', this.onEscKey);
