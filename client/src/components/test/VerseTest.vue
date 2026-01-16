@@ -8,6 +8,7 @@
         v-if="activeIndex === index"
         ref="inputs"
         :expected="currentExpected"
+        :lengthLabel="lengthLabel"
         @correct="handleCorrect()"
       />
 
@@ -25,9 +26,9 @@
 
 <script>
 import { ref, computed, nextTick } from 'vue';
-import { store } from '@/store';
 import { delay, generateDashes } from '@/utils/helpers';
 import TextInput from '@/components/ui/TextInput.vue';
+import { useLanguage } from '@/composables/useLanguage';
 
 export default {
   name: 'VerseTest',
@@ -37,6 +38,9 @@ export default {
   },
   emits: ['done'],
   setup(props, { emit, expose }) {
+    const { t } = useLanguage();
+    const lengthLabel = t('labels.length');
+    
     const inputs = ref([]);
     const words = ref([]);
     const activeIndex = ref(0);
@@ -62,7 +66,6 @@ export default {
       await nextTick();
       if (inputs.value?.length > 0) {
         const input = inputs.value[0];
-        store.setCurrentInput(input);
         input.focus();
       }
     };
@@ -82,6 +85,7 @@ export default {
       handleCorrect,
       restartTest,
       generateDashes,
+      lengthLabel,
     };
   },
 };

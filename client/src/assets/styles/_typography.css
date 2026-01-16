@@ -15,7 +15,7 @@
 p.quran-text {
   font-family: "Uthmani";
   font-size: 1.4rem;
-  transition: all 0.4s ease;
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
 }
 
 @media (min-width: 900px) {

@@ -2,7 +2,7 @@
   <span class="text-input-wrapper">
     <span class="length-indicator">
       <span>{{ expected.length }}</span>
-      <span>{{ t('labels.length') }}</span>
+      <span>{{ lengthLabel }}</span>
     </span>
     <textarea ref="inputRef" rows="1" tabindex="1" class="text-input input" :class="{ shake: isShaking }"
       v-model="inputValue" @input="handleInput" :style="{ width: inputWidth }"></textarea>
@@ -11,17 +11,16 @@
 
 <script>
 import { ref, computed } from 'vue';
-import { useLanguage } from '@/composables/useLanguage';
 import { simplifyArabicText } from '@/utils/textUtils';
 
 export default {
   name: 'TextInput',
   props: {
     expected: { type: String, required: true },
+    lengthLabel: { type: String, default: '' },
   },
   emits: ['correct'],
   setup(props, { emit, expose }) {
-    const { t, locale } = useLanguage();
     const inputRef = ref(null);
     const inputValue = ref('');
     const hint = ref('');
@@ -84,8 +83,6 @@ export default {
       isShaking,
       inputWidth,
       handleInput,
-      t, 
-      locale
     };
   },
 };

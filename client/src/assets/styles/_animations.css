@@ -32,7 +32,7 @@
 
 .correct {
   color: var(--color-active);
-  scale: 1.07;
+  transform: scale(1.07);
   text-shadow:
     0 0 10px var(--color-accent-2),
     0 0 20px var(--color-accent-2);
