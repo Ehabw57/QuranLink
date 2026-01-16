@@ -1,0 +1,39 @@
+@keyframes shake {
+  0%, 100% { 
+    color: var(--color-text); 
+    left: 0; 
+  }
+  25% { 
+    left: -5px; 
+  }
+  50% { 
+    color: var(--color-text); 
+    background-color: var(--color-danger); 
+    left: 5px; 
+  }
+  75% { 
+    left: -5px; 
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.shake {
+  position: relative;
+  animation: shake 0.4s ease-in-out;
+}
+
+.correct {
+  color: var(--color-active);
+  scale: 1.07;
+  text-shadow:
+    0 0 10px var(--color-accent-2),
+    0 0 20px var(--color-accent-2);
+}

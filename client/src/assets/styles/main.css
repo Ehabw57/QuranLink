@@ -1,0 +1,495 @@
+/* Import all CSS partials */
+@import './_variables.css';
+@import './_reset.css';
+@import './_typography.css';
+@import './_animations.css';
+
+/* Layout Styles */
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 30px;
+    margin-bottom: 10px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.site-header h1 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex: 1;
+}
+
+.site-header .settings {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+
+.site-header .settings:hover {
+    background: var(--color-header-border);
+}
+
+.site-footer {
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    padding: 20px 24px 16px;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+.footer-visits {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.footer-visits>* {
+    padding-inline: 2px;
+    margin-top: 4px;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.footer-about {
+    flex: 1;
+    min-width: 250px;
+    max-width: 600px;
+}
+
+.footer-about h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-active);
+}
+
+.footer-about p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+}
+
+.footer-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.social-links {
+    display: flex;
+    gap: 16px;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-border);
+}
+
+.social-links a:hover {
+    background-color: var(--color-active);
+    color: white;
+}
+
+.social-links i {
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .footer-about {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .footer-about h3 {
+        font-size: 1rem;
+    }
+
+    .footer-about p {
+        font-size: 1rem;
+    }
+
+    .social-links {
+        gap: 12px;
+    }
+
+    .social-links a {
+        width: 36px;
+        height: 36px;
+    }
+
+    .social-links i {
+        font-size: 1rem;
+    }
+
+    .site-footer {
+        padding: 16px 20px 12px;
+    }
+}
+
+/* Config Panel Styles */
+.config,
+.config-panel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.875rem;
+}
+
+.config {
+    min-width: 800px;
+    min-height: 60px;
+    margin: 20px auto;
+    padding: 10px 24px;
+    border-radius: 36px;
+    border: 1px solid var(--color-border);
+}
+
+.config-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    transition: background-color 0.2s;
+}
+
+.config-item>i {
+    font-size: 1rem;
+    color: var(--color-text);
+}
+
+.config-item select {
+    padding: 3px 5px;
+    border-radius: 6px;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    font-size: 0.8125rem;
+}
+
+.config-item select:focus {
+    outline: none;
+    border-color: var(--color-active);
+}
+
+.mobile-only,
+.desktop-only {
+    display: none;
+}
+
+@media (max-width: 899px) {
+    .mobile-only {
+        display: flex;
+    }
+}
+
+@media (min-width: 900px) {
+    .desktop-only {
+        display: flex;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    background-color: var(--color-backdrop);
+    z-index: 1;
+}
+
+.close {
+    color: var(--color-text);
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.close:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.modal-content {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--color-bg);
+    border-radius: 16px;
+    border: 1px solid var(--color-border);
+    padding: 30px;
+}
+
+.modal-content>h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.modal-content .config-panel{
+    flex: 1 1 auto;
+    flex-direction: column;
+}
+
+.modal-content .config-panel>div {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background-color: var(--color-bg);
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+}
+
+.modal-content select {
+    padding: 3px 6px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.modal-content select:focus {
+    outline: none;
+    border-color: var(--color-active);
+}
+
+.modal-content label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-muted);
+    margin-bottom: 4px;
+}
+
+@media (max-width: 600px) {
+
+    .modal{
+        padding: 10px;
+    }
+
+    .modal-content {
+        width: 95%;
+        height: 90vh;
+        padding: 20px;
+        border-radius: 0;
+    }
+
+    .modal-content>h1 {
+        font-size: 1.25rem;
+    }
+}
+
+.test-container .text-input,
+.test-container .input {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    outline: none;
+    scrollbar-width: none;
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: "Uthmani";
+    color: var(--color-text);
+    resize: none;
+    transition: all 0.3s ease;
+}
+
+.test-container .text-input:focus,
+.test-container .input:focus {
+    border-color: var(--color-accent-2);
+}
+
+.test-buttons {
+    margin-top: 2vh;
+    padding: 0 20%;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.test-buttons>i {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.test-buttons>i:hover {
+    color: var(--color-active);
+}
+
+.test-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 8px;
+    padding-inline: 16px;
+    direction: rtl;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    justify-items: flex-end;
+    align-content: flex-start;
+    margin-top: 10px;
+    height: 230px;
+    overflow-y: auto;
+}
+.test-container > div{
+    flex: 0 0 auto;
+}
+
+.verseBlock {
+    display: contents;
+}
+
+.test-container .words-test {
+    justify-content: center;
+}
+
+@media (min-width: 900px) {
+
+    .test-container .text-input,
+    .test-container .input {
+        font-size: 1.9rem;
+    }
+
+    .test-buttons>i {
+        font-size: 1.6rem;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .test-container .text-input,
+    .test-container .input {
+        font-size: 1.9rem;
+    }
+
+    .test-buttons>i {
+        font-size: 1.9rem;
+    }
+}
+
+/* Loader Styles */
+.loader-container {
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid var(--color-active);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1.8s linear infinite;
+}
+
+/* Surah Border Styles */
+.border-container {
+    margin-top: 10px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.border-container .border-ornament {
+    width: 100%;
+    max-width: 900px;
+    height: 80px;
+    display: block;
+}
+
+.surahName {
+    font-family: 'SurahName', sans-serif;
+    font-size: 3rem;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-text);
+}
+
+@media (min-width: 900px) {
+    .footer-about{
+        justify-content: center;
+    }
+}
+
+@media (min-width: 1200px) {
+}
+
+/* Utility classes */
+.dashes {
+    min-height: 57px;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 3px;
+    font-family: monospace;
+}

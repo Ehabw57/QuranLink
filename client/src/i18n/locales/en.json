@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Quran Link"
+    "title": "Quran Link",
+    "tagline": "Infinite Wisdom"
   },
   "footer": {
     "about": "An interactive Quran memorization tool designed to help you practice and perfect your Hifz journey"
@@ -28,7 +29,8 @@
   },
   "labels": {
     "start": "Start",
-    "end": "End"
+    "end": "End",
+    "length": " chars"
   },
   "buttons": {
     "repeat": "Repeat",
@@ -36,7 +38,7 @@
     "restart": "Restart",
     "next": "Next"
   },
-  "loading": "Loading...",
+  "loading": "...",
   "errors": {
     "networkError": "Network error. Please check your connection.",
     "serverError": "Server error. Please try again later.",

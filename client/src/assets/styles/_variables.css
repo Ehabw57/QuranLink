@@ -1,0 +1,48 @@
+:root {
+  /* Colors - Dark theme (default) */
+  --color-bg: #323437;
+  --color-text: #D1D0C5;
+  --color-muted: #9AA0A6;
+  --color-surface: #3a3c40;
+  --color-border: rgba(100,90,90,0.6);
+  --color-hover: #aaaaaa;
+  --color-accent: #0ea5e9;
+  --color-accent-2: #22c55e;
+  --color-accent-active: #0284c7;
+  --color-active: #E2B714;
+  --color-danger: #f23232;
+  --color-backdrop: rgba(0,0,0,0.4);
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 50%;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+}
+
+[data-theme="light"] {
+  --color-bg: #f6f7fb;
+  --color-text: #1f2937;
+  --color-muted: #6b7280;
+  --color-surface: #ffffff;
+  --color-border: rgba(0,0,0,0.08);
+  --color-hover: #374151;
+  --color-accent: #2563eb;
+  --color-accent-2: #16934a;
+  --color-accent-active: #1d4ed8;
+  --color-active: #748309;
+  --color-danger: #dc2626;
+  --color-backdrop: rgba(0,0,0,0.35);
+}

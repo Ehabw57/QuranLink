@@ -1,0 +1,44 @@
+@font-face {
+  font-family: "Uthmani";
+  src: url('~@/../public/assets/fonts/Uthmanic.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SurahName';
+  src: url('~@/../public/assets/fonts/SurahNames.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+p.quran-text {
+  font-family: "Uthmani";
+  font-size: 1.4rem;
+  transition: all 0.4s ease;
+}
+
+@media (min-width: 900px) {
+  p.quran-text {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  p.quran-text {
+    font-size: 2.6rem;
+  }
+}
+
+html[dir="ltr"],
+html[dir="ltr"] button,
+html[dir="ltr"] select {
+  font-family: "Google Sans", sans-serif;
+}
+
+
+html[dir="rtl"],
+html[dir="rtl"] button,
+html[dir="rtl"] select {
+  font-family: "Rubik", sans-serif;
+}
