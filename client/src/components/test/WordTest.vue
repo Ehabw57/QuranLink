@@ -1,10 +1,10 @@
 <template>
-  <div v-for="(word, index) in verse.simple_text" :key="index">
+  <template v-for="(word, index) in verse.simple_text" :key="index">
     <TextInput
       v-if="index === activeIndex"
       ref="inputs"
       @correct="handleCorrect"
-      :expected="word"
+      :expected="currentExpected"
     />
 
     <p class='dashes' v-else-if="index > activeIndex && inputIndexs.includes(index)">
@@ -18,13 +18,13 @@
     > 
       {{ verse.text[index] }} 
     </p>
-  </div>
+  </template>
 
   <p class="quran-text">{{ verse.glyph_number }}</p>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 import { store } from '@/store';
 import { shuffleArray, delay, generateDashes } from '@/utils/helpers';
 import TextInput from '@/components/ui/TextInput.vue';
@@ -42,6 +42,10 @@ export default {
     const activeIndex = ref(0);
     const oldInputIndexs = ref([]);
     const inputIndexs = ref([]);
+    
+    const currentExpected = computed(() => {
+      return props.verse.simple_text[activeIndex.value] || '';
+    });
     
     const handleCorrect = async () => {
       if (inputIndexs.value.length <= 1) {
@@ -70,7 +74,7 @@ export default {
     };
     
     const focusInput = async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await nextTick();
       if (inputs.value?.length > 0) {
         const input = inputs.value[0];
         store.setCurrentInput(input);
@@ -92,6 +96,7 @@ export default {
       activeIndex,
       oldInputIndexs,
       inputIndexs,
+      currentExpected,
       handleCorrect,
       restartTest,
       generateDashes,

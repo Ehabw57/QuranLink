@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <span>{{ expected.length }}</span>
-    <span>{{ t('labels.length') }}</span>
-  </div>
-  <textarea ref="inputRef" rows="1" tabindex="1" class="text-input input" :class="{ shake: isShaking }"
-    v-model="inputValue" @input="handleInput" :style="{ width: inputWidth }"></textarea>
+  <span class="text-input-wrapper">
+    <span class="length-indicator">
+      <span>{{ expected.length }}</span>
+      <span>{{ t('labels.length') }}</span>
+    </span>
+    <textarea ref="inputRef" rows="1" tabindex="1" class="text-input input" :class="{ shake: isShaking }"
+      v-model="inputValue" @input="handleInput" :style="{ width: inputWidth }"></textarea>
+  </span>
 </template>
 
 <script>
@@ -90,7 +92,11 @@ export default {
 </script>
 
 <style scoped>
-  div{ 
+  .text-input-wrapper {
+    display: inline-block;
+  }
+
+  .length-indicator { 
     display: flex; 
     justify-content: center; 
     flex-direction: row-reverse;
@@ -99,7 +105,7 @@ export default {
     color: var(--color-muted);
   }
 
-  html[dir="rtl"] div {
+  html[dir="rtl"] .length-indicator {
     flex-direction: row;
   }
 

@@ -3,11 +3,11 @@
   <p class="quran-text">{{ verses[0].glyph_number }}</p>
 
   <div class="verseBlock" v-if="verses[1]">
-    <div v-for="(word, index) in verses[1].text" :key="index">
+    <template v-for="(word, index) in verses[1].text" :key="index">
       <TextInput
         v-if="activeIndex === index"
         ref="inputs"
-        :expected="verses[1].simple_text[index]"
+        :expected="currentExpected"
         @correct="handleCorrect()"
       />
 
@@ -17,14 +17,14 @@
       <p class="dashes" v-else>
         {{ generateDashes(verses[1].simple_text[index].length) }}
       </p>
-    </div>
+    </template>
 
     <p class="quran-text">{{ verses[1].glyph_number }}</p>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 import { store } from '@/store';
 import { delay, generateDashes } from '@/utils/helpers';
 import TextInput from '@/components/ui/TextInput.vue';
@@ -41,6 +41,10 @@ export default {
     const words = ref([]);
     const activeIndex = ref(0);
     
+    const currentExpected = computed(() => {
+      return props.verses[1]?.simple_text[activeIndex.value] || '';
+    });
+    
     const handleCorrect = async () => {
       const questionVerse = props.verses[1];
       if (activeIndex.value === questionVerse.text.length - 1) {
@@ -55,7 +59,7 @@ export default {
     };
     
     const focusInput = async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await nextTick();
       if (inputs.value?.length > 0) {
         const input = inputs.value[0];
         store.setCurrentInput(input);
@@ -74,6 +78,7 @@ export default {
       inputs,
       words,
       activeIndex,
+      currentExpected,
       handleCorrect,
       restartTest,
       generateDashes,
