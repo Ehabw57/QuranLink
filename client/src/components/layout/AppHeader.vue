@@ -44,3 +44,15 @@ export default {
     },
 };
 </script>
+
+<style>
+    .settings {
+        display: inline-flex;
+    }
+
+    @media (min-width: 900px) {
+        .settings {
+            display: none;
+        }
+    }
+</style>

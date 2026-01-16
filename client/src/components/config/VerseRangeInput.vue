@@ -1,30 +1,31 @@
 <template>
   <div class="selector">
-  <div>
-    <label>{{ t('labels.start') }}:</label>
-    <select @change="updateModel('startChapter', $event.target.value)" :value="modelValue.startChapter">
-      <option v-for="chapter in chapters" :key="chapter.id" :value="chapter.id">
-        {{ chapter.id }}-{{ locale === 'ar' ? chapter.name : chapter.en_name }}
-      </option>
-    </select>
-    <select @change="updateModel('startVerse', $event.target.value)" :value="modelValue.startVerse">
-      <option v-for="n in startVerseOptions" :key="n" :value="n">{{ n }}</option>
-    </select>
-  </div>
+    <div>
+      <label>{{ t('labels.start') }}:</label>
+      <select @change="updateModel('startChapter', $event.target.value)" :value="modelValue.startChapter">
+        <option v-for="chapter in chapters" :key="chapter.id" :value="chapter.id">
+          {{ chapter.id }}-{{ locale === 'ar' ? chapter.name : chapter.en_name }}
+        </option>
+      </select>
+      <select @change="updateModel('startVerse', $event.target.value)" :value="modelValue.startVerse">
+        <option v-for="n in startVerseOptions" :key="n" :value="n">{{ n }}</option>
+      </select>
+    </div>
 
-      <component :is="locale === 'ar' ? 'ArrowLeft' : 'ArrowRight'" style="width: 18px; height: 18px; color: var(--color-muted)" />
+    <component :is="locale === 'ar' ? 'ArrowLeft' : 'ArrowRight'"
+      style="width: 18px; height: 18px; color: var(--color-muted)" />
 
-  <div>
-    <label>{{ t('labels.end') }}:</label>
-    <select @change="updateModel('endChapter', $event.target.value)" :value="modelValue.endChapter">
-      <option v-for="chapter in filteredChapters" :key="chapter.id" :value="chapter.id">
-        {{ chapter.id }}-{{ locale === 'ar' ? chapter.name : chapter.en_name }}
-      </option>
-    </select>
-    <select @change="updateModel('endVerse', $event.target.value)" :value="modelValue.endVerse">
-      <option v-for="n in endVerseOptions" :key="n" :value="n">{{ n }}</option>
-    </select>
-  </div>
+    <div>
+      <label>{{ t('labels.end') }}:</label>
+      <select @change="updateModel('endChapter', $event.target.value)" :value="modelValue.endChapter">
+        <option v-for="chapter in filteredChapters" :key="chapter.id" :value="chapter.id">
+          {{ chapter.id }}-{{ locale === 'ar' ? chapter.name : chapter.en_name }}
+        </option>
+      </select>
+      <select @change="updateModel('endVerse', $event.target.value)" :value="modelValue.endVerse">
+        <option v-for="n in endVerseOptions" :key="n" :value="n">{{ n }}</option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -95,17 +96,32 @@ export default {
 };
 </script>
 
-<style >
+<style>
+  select{
+  max-width: 120px;
+  }
 .selector {
   display: flex;
   align-items: center;
-  gap: 12px;
 }
 
 label {
-  margin-left: 4px;
   font-weight: 300;
   color: var(--color-muted);
+
+}
+
+@media (min-width: 900px) {
+  select {
+    max-width: none;
+  }
+  .selector {
+    gap: 12px;
+  }
+
+  label {
+    margin: 4px;
+  }
 
 }
 </style>

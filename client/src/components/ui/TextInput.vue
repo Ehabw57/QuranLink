@@ -99,9 +99,10 @@ export default {
   .length-indicator { 
     display: flex; 
     justify-content: center; 
+    margin-bottom: 5px;
     flex-direction: row-reverse;
     gap: 3px; 
-    font-size: 0.9rem; 
+    font-size: 0.7rem; 
     color: var(--color-muted);
   }
 
@@ -109,11 +110,4 @@ export default {
     flex-direction: row;
   }
 
-p {
-  margin: 0;
-  text-align: center;
-  padding: 0;
-  font-size: 14px;
-  color: var(--color-muted);
-}
 </style>

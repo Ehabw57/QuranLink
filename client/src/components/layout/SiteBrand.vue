@@ -58,9 +58,9 @@ export default {
     height: 36px;
 }
 
-.site-brand .logo svg {
-    width: 100%;
-    height: 100%;
+.logo svg {
+    width: 75%;
+    height: 75%;
     display: block;
 }
 
@@ -90,7 +90,12 @@ export default {
     color: var(--color-muted);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
+    .logo svg {
+        width: 100%;
+        height: 100%;
+    }
+
     .site-brand .brand-text {
         display: flex;
     }
